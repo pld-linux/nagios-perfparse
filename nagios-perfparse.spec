@@ -9,18 +9,19 @@
 Summary:	Add-On for Nagios®
 Name:		nagios-perfparse
 Version:	0.105.6
-Release:	0.5
+Release:	0.13
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/perfparse/perfparse-%{version}.tar.gz
 # Source0-md5:	d5fbca1184d9e831b14ed7088f295772
+Source1:	perfparse.cfg
 URL:		http://perfparse.sourceforge.net/
 BuildRequires:	zlib-devel
 BuildRequires:	glib-devel
 BuildRequires:	gd-devel
 %{?with_mysql:BuildRequires:	mysql-devel}
 %{?with_pgsql:BuildRequires:	postgresql-devel}
-Requires:	nagios-common
+Requires:	nagios-common >= 2.0-0.b3.36
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir /etc/nagios
@@ -74,12 +75,19 @@ Static libraries for perfparse.
 %install
 rm -rf $RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/plugins
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+rm -f $RPM_BUILD_ROOT%{_sysconfdir}/nagios_perfparse.cfg
+install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/plugins/perfparse.cfg
+mv $RPM_BUILD_ROOT%{_sysconfdir}/perfparse.cfg{.example,}
 
 %if %{without devel}
 rm -f $RPM_BUILD_ROOT/usr/lib/lib*.{la,a}
 %endif
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -92,9 +100,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog INSTALL NEWS README TODO
-%{_sysconfdir}/nagios_perfparse.cfg
-%{_sysconfdir}/perfparse.cfg.example
+%doc AUTHORS ChangeLog README TODO scripts/*.sql
+%attr(640,root,nagios) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/plugins/perfparse.cfg
+%attr(640,root,nagios-data) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/perfparse.cfg
 
 %attr(755,root,root) %{_bindir}/perfparse-log2any
 %attr(755,root,root) %{_bindir}/perfparse.sh.example
@@ -120,8 +128,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/perfparse.cgi
 %endif
 
-%{_datadir}/locale/de/LC_MESSAGES/perfparse.mo
-%{_datadir}/locale/fr/LC_MESSAGES/perfparse.mo
+%lang(de) %{_datadir}/locale/de/LC_MESSAGES/perfparse.mo
+%lang(fr) %{_datadir}/locale/fr/LC_MESSAGES/perfparse.mo
 %{_datadir}/perfparse/images/dec0.png
 %{_datadir}/perfparse/images/dec1.png
 %{_datadir}/perfparse/images/inc0.png
