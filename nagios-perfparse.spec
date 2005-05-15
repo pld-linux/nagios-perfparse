@@ -1,12 +1,12 @@
 # Conditional build:
-%bcond_without	mysql		# skip building of mysql storage
+%bcond_with	mysql		# skip building of mysql storage
 %bcond_with	pgsql		# use pgsql storage (broken)
 #
 Summary:	Add-On for Nagios(R)
 Summary(pl):	Dodatek perfparse dla Nagiosa
 Name:		nagios-perfparse
 Version:	0.105.6
-Release:	0.13
+Release:	0.15
 License:	GPL
 Group:		Applications/System
 Source0:	http://dl.sourceforge.net/perfparse/perfparse-%{version}.tar.gz
@@ -14,10 +14,12 @@ Source0:	http://dl.sourceforge.net/perfparse/perfparse-%{version}.tar.gz
 Source1:	perfparse.cfg
 URL:		http://perfparse.sourceforge.net/
 BuildRequires:	zlib-devel
-BuildRequires:	glib-devel
+BuildRequires:	glib2-devel
 BuildRequires:	gd-devel
+BuildRequires:	pkgconfig
 %{?with_mysql:BuildRequires:	mysql-devel}
 %{?with_pgsql:BuildRequires:	postgresql-devel}
+%{!?with_mysql:Obsoletes:	%{name}-storage-mysql}
 Requires:	nagios-common >= 2.0-0.b3.36
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
