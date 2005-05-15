@@ -1,10 +1,6 @@
-# TODO
-# - devel/static packagages needed? what for?
-#
 # Conditional build:
 %bcond_without	mysql		# skip building of mysql storage
 %bcond_with	pgsql		# use pgsql storage (broken)
-%bcond_with	devel		# build devel packages
 #
 Summary:	Add-On for Nagios(R)
 Summary(pl):	Dodatek perfparse dla Nagiosa
@@ -41,19 +37,6 @@ wykresy ¿ywych danych ze standardowych wtyczek Nagiosa. Ci±g³a
 historia wyników wtyczki mo¿e byæ przegl±dana zaawansowanymi
 narzêdziami do analizy.
 
-%package devel
-Summary:	Development files for perfparse library
-Summary(pl):	Pliki programistyczne biblioteki perfparse
-Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
-
-%description devel
-This is the package containing the development libraries files for
-perfparse.
-
-%description devel -l pl
-Ten pakiet zawiera pliki programistyczne biblioteki perfparse.
-
 %package storage-mysql
 Summary:	mysql storage module for perfparse
 Summary(pl):	Modu³ przechowywania danych mysql dla perfparse
@@ -78,18 +61,6 @@ pgsql storage module for perfparse.
 %description storage-pgsql -l pl
 Modu³ przechowywania danych pgsql dla perfparse.
 
-%package static
-Summary:	Static perfparse libraries
-Summary(pl):	Statyczne biblioteki perfparse
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description static
-Static libraries for perfparse.
-
-%description static -l pl
-Statyczne biblioteki perfparse.
-
 %prep
 %setup -q -n perfparse-%{version}
 
@@ -112,9 +83,8 @@ rm -f $RPM_BUILD_ROOT%{_sysconfdir}/nagios_perfparse.cfg
 install %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/plugins/perfparse.cfg
 mv $RPM_BUILD_ROOT%{_sysconfdir}/perfparse.cfg{.example,}
 
-%if %{without devel}
+# don't see reason for devel and static libs
 rm -f $RPM_BUILD_ROOT/usr/lib/lib*.{la,a}
-%endif
 
 %find_lang perfparse
 
@@ -172,36 +142,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libpp_mysql.so.0.0.0
 %attr(755,root,root) %{_libdir}/libpp_storage_mysql.so.0.0.0
-%endif
-
-%if %{with devel}
-%files devel
-%defattr(644,root,root,755)
-%{_libdir}/libpp_common.la
-%{_libdir}/libpp_storage_file_output.la
-%{_libdir}/libpp_storage_gnuplot.la
-%{_libdir}/libpp_storage_print.la
-%{_libdir}/libpp_storage_socket_output.la
-%{_libdir}/libpp_storage_stdout.la
-%{_libdir}/libnagios_perfdata_parser.la
-
-%if %{with mysql}
-%{_libdir}/libpp_mysql.la
-%{_libdir}/libpp_storage_mysql.la
-%endif
-
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/libpp_common.a
-%{_libdir}/libpp_storage_file_output.a
-%{_libdir}/libpp_storage_gnuplot.a
-%{_libdir}/libpp_storage_print.a
-%{_libdir}/libpp_storage_socket_output.a
-%{_libdir}/libpp_storage_stdout.a
-%{_libdir}/libnagios_perfdata_parser.a
-
-%if %{with mysql}
-%{_libdir}/libpp_mysql.a
-%{_libdir}/libpp_storage_mysql.a
-%endif
 %endif
