@@ -6,7 +6,8 @@
 %bcond_with	pgsql		# use pgsql storage (broken)
 %bcond_with	devel		# build devel packages
 #
-Summary:	Add-On for Nagios®
+Summary:	Add-On for Nagios(R)
+Summary(pl):	Dodatek perfparse dla Nagiosa
 Name:		nagios-perfparse
 Version:	0.105.6
 Release:	0.13
@@ -33,34 +34,61 @@ data produced by Nagios and produces high-quality accurate graphs of
 live data from standard Nagios plugins. A permanent history of plugin
 results can then be viewed with advanced analysis tools.
 
+%description -l pl
+PerfParse u³atwia przechowywanie i analizê binarnych danych
+dotycz±cych wydajno¶ci stworzonych przez Nagiosa oraz tworzy dok³adne
+wykresy ¿ywych danych ze standardowych wtyczek Nagiosa. Ci±g³a
+historia wyników wtyczki mo¿e byæ przegl±dana zaawansowanymi
+narzêdziami do analizy.
+
 %package devel
-Summary:	Development libraries for perfparse library
+Summary:	Development files for perfparse library
+Summary(pl):	Pliki programistyczne biblioteki perfparse
 Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
-This is the package containing the development libaries files for perfparse.
+This is the package containing the development libraries files for
+perfparse.
+
+%description devel -l pl
+Ten pakiet zawiera pliki programistyczne biblioteki perfparse.
 
 %package storage-mysql
 Summary:	mysql storage module for perfparse
-Group:		Development/Libraries
+Summary(pl):	Modu³ przechowywania danych mysql dla perfparse
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description storage-mysql
 mysql storage module for perfparse.
 
+%description storage-mysql -l pl
+Modu³ przechowywania danych mysql dla perfparse.
+
 %package storage-pgsql
 Summary:	pgsql storage module for perfparse
-Group:		Development/Libraries
+Summary(pl):	Modu³ przechowywania danych pgsql dla perfparse
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description storage-pgsql
 pgsql storage module for perfparse.
 
+%description storage-pgsql -l pl
+Modu³ przechowywania danych pgsql dla perfparse.
+
 %package static
 Summary:	Static perfparse libraries
+Summary(pl):	Statyczne biblioteki perfparse
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static libraries for perfparse.
+
+%description static -l pl
+Statyczne biblioteki perfparse.
 
 %prep
 %setup -q -n perfparse-%{version}
@@ -88,6 +116,7 @@ mv $RPM_BUILD_ROOT%{_sysconfdir}/perfparse.cfg{.example,}
 rm -f $RPM_BUILD_ROOT/usr/lib/lib*.{la,a}
 %endif
 
+%find_lang perfparse
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -98,7 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %post	storage-mysql -p /sbin/ldconfig
 %postun	storage-mysql -p /sbin/ldconfig
 
-%files
+%files -f perfparse.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README TODO scripts/*.sql
 %attr(640,root,nagios) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/plugins/perfparse.cfg
@@ -128,8 +157,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_sbindir}/perfparse.cgi
 %endif
 
-%lang(de) %{_datadir}/locale/de/LC_MESSAGES/perfparse.mo
-%lang(fr) %{_datadir}/locale/fr/LC_MESSAGES/perfparse.mo
+%dir %{_datadir}/perfparse
+%dir %{_datadir}/perfparse/images
 %{_datadir}/perfparse/images/dec0.png
 %{_datadir}/perfparse/images/dec1.png
 %{_datadir}/perfparse/images/inc0.png
