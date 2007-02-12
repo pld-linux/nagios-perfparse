@@ -3,7 +3,7 @@
 %bcond_with	pgsql		# use pgsql storage (broken)
 #
 Summary:	Add-On for Nagios(R)
-Summary(pl):	Dodatek perfparse dla Nagiosa
+Summary(pl.UTF-8):   Dodatek perfparse dla Nagiosa
 Name:		nagios-perfparse
 Version:	0.105.6
 Release:	0.15
@@ -32,36 +32,36 @@ data produced by Nagios and produces high-quality accurate graphs of
 live data from standard Nagios plugins. A permanent history of plugin
 results can then be viewed with advanced analysis tools.
 
-%description -l pl
-PerfParse u³atwia przechowywanie i analizê binarnych danych
-dotycz±cych wydajno¶ci stworzonych przez Nagiosa oraz tworzy dok³adne
-wykresy ¿ywych danych ze standardowych wtyczek Nagiosa. Ci±g³a
-historia wyników wtyczki mo¿e byæ przegl±dana zaawansowanymi
-narzêdziami do analizy.
+%description -l pl.UTF-8
+PerfParse uÅ‚atwia przechowywanie i analizÄ™ binarnych danych
+dotyczÄ…cych wydajnoÅ›ci stworzonych przez Nagiosa oraz tworzy dokÅ‚adne
+wykresy Å¼ywych danych ze standardowych wtyczek Nagiosa. CiÄ…gÅ‚a
+historia wynikÃ³w wtyczki moÅ¼e byÄ‡ przeglÄ…dana zaawansowanymi
+narzÄ™dziami do analizy.
 
 %package storage-mysql
 Summary:	mysql storage module for perfparse
-Summary(pl):	Modu³ przechowywania danych mysql dla perfparse
+Summary(pl.UTF-8):   ModuÅ‚ przechowywania danych mysql dla perfparse
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description storage-mysql
 mysql storage module for perfparse.
 
-%description storage-mysql -l pl
-Modu³ przechowywania danych mysql dla perfparse.
+%description storage-mysql -l pl.UTF-8
+ModuÅ‚ przechowywania danych mysql dla perfparse.
 
 %package storage-pgsql
 Summary:	pgsql storage module for perfparse
-Summary(pl):	Modu³ przechowywania danych pgsql dla perfparse
+Summary(pl.UTF-8):   ModuÅ‚ przechowywania danych pgsql dla perfparse
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description storage-pgsql
 pgsql storage module for perfparse.
 
-%description storage-pgsql -l pl
-Modu³ przechowywania danych pgsql dla perfparse.
+%description storage-pgsql -l pl.UTF-8
+ModuÅ‚ przechowywania danych pgsql dla perfparse.
 
 %prep
 %setup -q -n perfparse-%{version}
