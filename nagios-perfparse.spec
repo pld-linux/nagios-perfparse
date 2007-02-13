@@ -3,7 +3,7 @@
 %bcond_with	pgsql		# use pgsql storage (broken)
 #
 Summary:	Add-On for Nagios(R)
-Summary(pl.UTF-8):   Dodatek perfparse dla Nagiosa
+Summary(pl.UTF-8):	Dodatek perfparse dla Nagiosa
 Name:		nagios-perfparse
 Version:	0.105.6
 Release:	0.15
@@ -41,7 +41,7 @@ narzędziami do analizy.
 
 %package storage-mysql
 Summary:	mysql storage module for perfparse
-Summary(pl.UTF-8):   Moduł przechowywania danych mysql dla perfparse
+Summary(pl.UTF-8):	Moduł przechowywania danych mysql dla perfparse
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -53,7 +53,7 @@ Moduł przechowywania danych mysql dla perfparse.
 
 %package storage-pgsql
 Summary:	pgsql storage module for perfparse
-Summary(pl.UTF-8):   Moduł przechowywania danych pgsql dla perfparse
+Summary(pl.UTF-8):	Moduł przechowywania danych pgsql dla perfparse
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
